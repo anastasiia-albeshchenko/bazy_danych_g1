@@ -15,7 +15,7 @@ select year(curdate()) -  year(dataUr) as wiek from kreatura group by rodzaj;
 ## Zadanie 2
 ### 1
 ``` sql
-
+select rodzaj, sum(waga) from zasob group by rodzaj;
 ```
 ### 2
 ``` sql
