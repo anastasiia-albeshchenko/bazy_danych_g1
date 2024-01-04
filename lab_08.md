@@ -10,8 +10,8 @@ create table wyprawa as select * from wikingowie.wyprawa;
 ```
 ### 2
 ``` sql
-select k.nazwa from kreatura k left join wyprawa w 
-on k.idKreatury=id_wyprawy where w.id_wyprawy is null ;
+select nazwa, idKreatury from kreatura where idKreatury not in (select distinct id_uczestnika
+from uczestnicy where id_wyprawy is not null);
 ```
 ### 3
 ``` sql
@@ -51,10 +51,20 @@ group by w.nazwa having sum(length(ew.dziennik))<400;
 ```
 ### 2
 ``` sql
-
+select w.nazwa, sum(z.waga * e.ilosc)/count(distinct(u.id_uczestnika)) from kreatura k
+inner join ekwipunek e on k.idKreatury = e.idKreatury
+inner join uczestnicy u on k.idKreatury = u.id_uczestnika
+inner join wyprawa w on u.id_wyprawy = w.id_wyprawy
+inner join zasob z on z.idZasobu = e.idZasobu
+group by w.nazwa;
 ```
 ## Zadanie 5
 ### 1
 ``` sql
-
+select k.nazwa, datediff(w.data_rozpoczecia, k.dataUr) from sektor s
+inner join etapy_wyprawy ew on s.id_sektora = ew.sektor
+inner join wyprawa w on w.id_wyprawy=ew.idWyprawy
+inner join uczestnicy u on w.id_wyprawy = u.id_wyprawy
+inner join kreatura k on k.idKreatury = u.id_uczestnika
+where ew.sektor = 7;
 ```
