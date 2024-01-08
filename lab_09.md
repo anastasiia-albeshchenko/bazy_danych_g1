@@ -30,7 +30,6 @@ begin
      inner join kreatura k on k.idKreatury=w.kierownik
 	 where id_wyprawy = old.id_wyprawy; 
 end
-
 //
 delimiter ;
 ```
@@ -41,7 +40,8 @@ delimiter //
 create procedure eliksir_sily (in id int)
   begin
     update kreatura set udzwig = udzwig * 1.2 where idKreatury = id;
-  end//
+  end
+//
 delimiter ;
 ```
 ### 2
@@ -77,6 +77,7 @@ create trigger system_alarmowy_after_insert on uczestnicy
     if czy_tesc and czy_dziad then
       insert into system_alarmowy values(default, 'Tesciowa nadchodzi !!!', default);
     end if;
-  end//
+  end
+//
 delimiter ;
 ```
